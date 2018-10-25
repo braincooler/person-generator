@@ -1,0 +1,27 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+	<changeSet id="24.10.2018-1" author="w.zeller@online.de" runInTransaction="true">
+
+		<!-- address -->
+		<createTable tableName="address">
+			<column autoIncrement="true" name="id" type="int"><constraints primaryKey="true" nullable="false"/></column>
+			<column name="street" type="varchar(30)"></column>
+			<column name="number" type="varchar(10)"></column>
+			<column name="zipcode" type="varchar(10)"></column>
+			<column name="city" type="varchar(30)"></column>
+		</createTable>
+		
+		<!-- person -->
+		<createTable tableName="person">
+			<column autoIncrement="true" name="id" type="int"><constraints primaryKey="true" nullable="false"/></column>
+			<column name="lastname" type="varchar(20)"></column>
+			<column name="firstname" type="varchar(20)"></column>
+			<column name="address" type="int"><constraints foreignKeyName="person_address_fk1" referencedTableName="address" referencedColumnNames="id" nullable="true" deleteCascade="false"/></column>				
+		</createTable>
+
+	</changeSet>
+</databaseChangeLog>
