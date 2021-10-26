@@ -65,11 +65,7 @@ public class PersonGenerator {
         String result = "x x";
         try {
             String path1 = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath()  + "files/gegenstaende.txt";
-            URL systemResource = ClassLoader.getSystemResource("files/gegenstaende.txt");
-            LOGGER.error("url: {}", systemResource);
 
-            URI uri = systemResource.toURI();
-            LOGGER.error("uri: {}", uri);
             Path path = Paths.get(path1.substring(1));
             LOGGER.error("path: {}", path);
 
