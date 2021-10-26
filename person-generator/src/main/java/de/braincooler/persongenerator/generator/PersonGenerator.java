@@ -62,6 +62,7 @@ public class PersonGenerator {
             Path path = Paths.get(pathName);
             int lineCount = Math.toIntExact(Files.lines(path).count());
             result = Files.lines(path).skip(RANDOM.nextInt(lineCount)).findFirst().get();
+            LOGGER.error("random line -> {}", result);
         } catch (Exception e) {
             LOGGER.error("Error on read file", e);
         }
