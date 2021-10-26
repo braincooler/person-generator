@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
@@ -61,14 +62,15 @@ public class PersonGenerator {
     }
 
     private String getRandomLine(String resource) {
-        String result = "";
+        String result = "x x";
         try {
+            String path1 = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath()  + "files/gegenstaende.txt";
             URL systemResource = ClassLoader.getSystemResource("files/gegenstaende.txt");
             LOGGER.error("url: {}", systemResource);
 
             URI uri = systemResource.toURI();
             LOGGER.error("uri: {}", uri);
-            Path path = Paths.get(uri);
+            Path path = Paths.get(path1.substring(1));
             LOGGER.error("path: {}", path);
 
             Stream<String> lines = Files.lines(path);
