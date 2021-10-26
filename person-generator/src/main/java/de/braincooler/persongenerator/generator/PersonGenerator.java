@@ -66,7 +66,7 @@ public class PersonGenerator {
         try {
             String path1 = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath()  + "files/gegenstaende.txt";
 
-            Path path = Paths.get(path1.substring(1));
+            Path path = Paths.get(path1);
             LOGGER.error("path: {}", path);
 
             Stream<String> lines = Files.lines(path);
