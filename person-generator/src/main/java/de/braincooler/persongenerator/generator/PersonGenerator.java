@@ -1,5 +1,7 @@
 package de.braincooler.persongenerator.generator;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -38,6 +40,12 @@ public class PersonGenerator {
 	private static final int MAX_HOUSE_NUMBER = 100;
 
 	public Person createPerson() {
+		try {
+			FileInputStream stream = new FileInputStream(ClassLoader.getSystemResource("files/strassen.txt").getPath());
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		Person person = new Person();
 		Address address = new Address();
 		int houseNumber = (int) (Math.random() * (MAX_HOUSE_NUMBER - 1)) + 1;
@@ -60,10 +68,11 @@ public class PersonGenerator {
 	private String getRandomLine(Resource resource) {
 		String result = "";
 		try {
-			Path path = Paths.get(resource.getURI());
-			int lineCount = Math.toIntExact(Files.lines(path).count());
-			result = Files.lines(path).skip(RANDOM.nextInt(lineCount)).findFirst().get();
-		} catch (IOException e) {
+			String path = ClassLoader.getSystemResource("files/strassen.txt").getPath();
+			LOGGER.error(path);
+			//int lineCount = Math.toIntExact(Files.lines(path).count());
+			// result = Files.lines(path).skip(RANDOM.nextInt(lineCount)).findFirst().get();
+		} catch (Exception e) {
 			LOGGER.error("Error on read file", e);
 		}
 		return result;
