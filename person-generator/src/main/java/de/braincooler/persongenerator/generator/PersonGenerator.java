@@ -59,10 +59,11 @@ public class PersonGenerator {
         String result = "";
         try {
             String pathName = Paths.get(ClassLoader.getSystemResource(resource).toURI()).toString();
+            LOGGER.error("path name -> {}", result);
+
             Path path = Paths.get(pathName);
             int lineCount = Math.toIntExact(Files.lines(path).count());
             result = Files.lines(path).skip(RANDOM.nextInt(lineCount)).findFirst().get();
-            LOGGER.error("random line -> {}", result);
         } catch (Exception e) {
             LOGGER.error("Error on read file", e);
         }
