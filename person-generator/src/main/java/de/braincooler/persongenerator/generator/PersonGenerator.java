@@ -7,10 +7,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.BufferedReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.SecureRandom;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class PersonGenerator {
@@ -58,12 +61,13 @@ public class PersonGenerator {
     private String getRandomLine(String resource) {
         String result = "";
         try {
-            String pathName = Paths.get(ClassLoader.getSystemResource(resource).toURI()).toString();
-            LOGGER.error("path name -> {}", result);
+            Path path = Paths.get(getClass().getClassLoader()
+                    .getResource("files/gegenstaende.txt").toURI());
 
-            Path path = Paths.get(pathName);
-            int lineCount = Math.toIntExact(Files.lines(path).count());
-            result = Files.lines(path).skip(RANDOM.nextInt(lineCount)).findFirst().get();
+            Stream<String> lines = Files.lines(path);
+            String data = lines.collect(Collectors.joining("\n"));
+            lines.close();
+            LOGGER.error(data);
         } catch (Exception e) {
             LOGGER.error("Error on read file", e);
         }
