@@ -5,11 +5,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>de.braincooler</groupId>
-	<artifactId>person-generator</artifactId>
+	<artifactId>personDto-generator</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>person-generator</name>
-	<description>fake person generator</description>
+	<name>personDto-generator</name>
+	<description>fake personDto generator</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

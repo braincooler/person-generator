@@ -6,13 +6,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import de.braincooler.persongenerator.model.Address;
+import de.braincooler.persongenerator.model.AddressDto;
 
 @Entity
 @Table(name = "address")
 public class AddressEntity {
 	
-	@Id @GeneratedValue (strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String street;
 	private String number;
@@ -21,7 +22,7 @@ public class AddressEntity {
 	
 	public AddressEntity() {	}
 
-	public AddressEntity(Address address) {
+	public AddressEntity(AddressDto address) {
 		this.street = address.getStreet();
 		this.number = address.getNumber();
 		this.zipcode = address.getZipcode();
@@ -65,10 +66,5 @@ public class AddressEntity {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-	
-	@Override
-	public String toString() {
-		return "Address [zipcode=" + zipcode + ", city=" + city + ", street=" + street + ", number=" + number + "]";
 	}
 }

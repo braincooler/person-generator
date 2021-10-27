@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import de.braincooler.persongenerator.entity.AddressEntity;
 
-@Repository
 public interface AddressRepository extends JpaRepository<AddressEntity, Long>{
 
 }

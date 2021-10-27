@@ -1,7 +1,7 @@
 package de.braincooler.persongenerator.generator;
 
-import de.braincooler.persongenerator.model.Address;
-import de.braincooler.persongenerator.model.Person;
+import de.braincooler.persongenerator.model.AddressDto;
+import de.braincooler.persongenerator.model.PersonDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,11 +12,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 public class PersonGenerator {
+    private static final SecureRandom RANDOM = new SecureRandom();
+    private static final Logger LOGGER = LoggerFactory.getLogger(PersonGenerator.class);
+    private static final int MAX_HOUSE_NUMBER = 100;
 
     @Value("files/nachnamen.txt")
     private String lastnameResource;
@@ -33,29 +36,27 @@ public class PersonGenerator {
     @Value("files/strassen.txt")
     private String streetResource;
 
-    private static final SecureRandom RANDOM = new SecureRandom();
-    private static final Logger LOGGER = LoggerFactory.getLogger(PersonGenerator.class);
-    private static final int MAX_HOUSE_NUMBER = 100;
+    public PersonDto createPerson() {
+        PersonDto personDto = new PersonDto();
+        personDto.setFirstname(getRandomLine(lastnameResource));
+        personDto.setLastname(RANDOM.nextBoolean() ?
+                getRandomLine(manFirstnameResource) :
+                getRandomLine(womanFirstnameResource));
+        personDto.setAddress(createAddress());
 
-    public Person createPerson() {
+        return personDto;
+    }
 
-        Person person = new Person();
-        Address address = new Address();
+    private AddressDto createAddress() {
+        AddressDto address = new AddressDto();
         int houseNumber = (int) (Math.random() * (MAX_HOUSE_NUMBER - 1)) + 1;
         address.setNumber(String.valueOf(houseNumber));
         String cityAndZip = getRandomLine(locationResource);
-        String cityAndZipArray[] = cityAndZip.split(" ");
+        String[] cityAndZipArray = cityAndZip.split(" ");
         address.setZipcode(cityAndZipArray[0]);
         address.setCity(cityAndZipArray[1]);
         address.setStreet(getRandomLine(streetResource));
-        person.setFirstname(getRandomLine(lastnameResource));
-        // 50/50 male or female
-        if (RANDOM.nextInt(1) == 1)
-            person.setLastname(getRandomLine(manFirstnameResource));
-        else
-            person.setLastname(getRandomLine(womanFirstnameResource));
-        person.setAddress(address);
-        return person;
+        return address;
     }
 
     private String getRandomLine(String resource) {
@@ -63,16 +64,10 @@ public class PersonGenerator {
         try {
             ClassLoader cl = this.getClass().getClassLoader();
             InputStream in = cl.getResourceAsStream(resource);
-
-            if (in != null) {
-                BufferedReader br = new BufferedReader(new InputStreamReader(in));
-                List<String> lines = br.lines()
-                        .collect(Collectors.toList());
-                result = lines.get(RANDOM.nextInt(lines.size()));
-            } else {
-                LOGGER.error("inputstream is null");
-            }
-
+            BufferedReader br = new BufferedReader(new InputStreamReader(Objects.requireNonNull(in)));
+            List<String> lines = br.lines()
+                    .collect(Collectors.toList());
+            result = lines.get(RANDOM.nextInt(lines.size()));
         } catch (Exception e) {
             LOGGER.error("Error on read file", e);
         }
