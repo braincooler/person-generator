@@ -1,7 +1,7 @@
 package de.braincooler.persongenerator.generator;
 
-import de.braincooler.persongenerator.model.AddressDto;
-import de.braincooler.persongenerator.model.PersonDto;
+import de.braincooler.persongenerator.controller.dto.AddressDto;
+import de.braincooler.persongenerator.controller.dto.PersonDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
