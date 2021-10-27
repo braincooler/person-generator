@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
@@ -63,16 +65,16 @@ public class PersonGenerator {
 
     private String getRandomLine(String resource) {
         String result = "x x";
+        String thisLine = null;
         try {
-            String path1 = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath()  + "files/gegenstaende.txt";
+            InputStream in = getClass().getResourceAsStream("gegenstaende.txt");
 
-            Path path = Paths.get(path1);
-            LOGGER.error("path: {}", path);
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
 
-            Stream<String> lines = Files.lines(path);
-            String data = lines.collect(Collectors.joining("\n"));
-            lines.close();
-            LOGGER.error(data);
+            while ((thisLine = br.readLine()) != null) {
+                System.out.println(thisLine);
+            }
+
         } catch (Exception e) {
             LOGGER.error("Error on read file", e);
         }
