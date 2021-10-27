@@ -49,14 +49,17 @@ public class PersonGenerator {
 
     private AddressDto createAddress() {
         AddressDto address = new AddressDto();
-        int houseNumber = (int) (Math.random() * (MAX_HOUSE_NUMBER - 1)) + 1;
-        address.setNumber(String.valueOf(houseNumber));
+        address.setNumber(getRandomHouseNumber());
         String cityAndZip = getRandomLine(locationResource);
         String[] cityAndZipArray = cityAndZip.split(" ");
         address.setZipcode(cityAndZipArray[0]);
         address.setCity(cityAndZipArray[1]);
         address.setStreet(getRandomLine(streetResource));
         return address;
+    }
+
+    private String getRandomHouseNumber() {
+        return String.valueOf(RANDOM.nextInt((MAX_HOUSE_NUMBER - 1)) + 1);
     }
 
     private String getRandomLine(String resource) {
