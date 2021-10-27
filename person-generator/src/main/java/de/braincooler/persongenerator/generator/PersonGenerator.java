@@ -11,6 +11,9 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.SecureRandom;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class PersonGenerator {
@@ -63,9 +66,9 @@ public class PersonGenerator {
 
             if (in != null) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(in));
-                br.lines().forEach(LOGGER::error);
-                //int lineCount = Math.toIntExact(br.lines().count());
-                //result = br.lines().skip(RANDOM.nextInt(lineCount)).findFirst().get();
+                List<String> lines = br.lines()
+                        .collect(Collectors.toList());
+                result = lines.get(RANDOM.nextInt(lines.size()));
             } else {
                 LOGGER.error("inputstream is null");
             }
