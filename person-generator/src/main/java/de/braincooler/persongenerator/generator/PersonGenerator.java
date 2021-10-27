@@ -63,8 +63,9 @@ public class PersonGenerator {
 
             if (in != null) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(in));
-                int lineCount = Math.toIntExact(br.lines().count());
-                result = br.lines().skip(RANDOM.nextInt(lineCount)).findFirst().get();
+                br.lines().forEach(LOGGER::error);
+                //int lineCount = Math.toIntExact(br.lines().count());
+                //result = br.lines().skip(RANDOM.nextInt(lineCount)).findFirst().get();
             } else {
                 LOGGER.error("inputstream is null");
             }
