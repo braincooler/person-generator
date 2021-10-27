@@ -56,17 +56,17 @@ public class PersonGenerator {
     }
 
     private String getRandomLine(String resource) {
-        String result = "x x";
-        String thisLine = null;
+        String result = "";
         try {
             ClassLoader cl = this.getClass().getClassLoader();
-            InputStream in = cl.getResourceAsStream("files/gegenstaende.txt");
+            InputStream in = cl.getResourceAsStream(resource);
 
             if (in != null) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(in));
-                while ((thisLine = br.readLine()) != null) {
-                    LOGGER.error(thisLine);
-                }
+                int lineCount = Math.toIntExact(br.lines().count());
+                result = br.lines().skip(RANDOM.nextInt(lineCount)).findFirst().get();
+            } else {
+                LOGGER.error("inputstream is null");
             }
 
         } catch (Exception e) {
