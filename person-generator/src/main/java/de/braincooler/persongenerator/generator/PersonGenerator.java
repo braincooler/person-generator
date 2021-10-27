@@ -60,7 +60,7 @@ public class PersonGenerator {
         String thisLine = null;
         try {
             ClassLoader cl = this.getClass().getClassLoader();
-            InputStream in = cl.getResourceAsStream("gegenstaende.txt");
+            InputStream in = cl.getResourceAsStream("files/gegenstaende.txt");
 
             if (in != null) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(in));
