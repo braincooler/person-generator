@@ -8,17 +8,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URI;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.SecureRandom;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 public class PersonGenerator {
@@ -67,12 +59,13 @@ public class PersonGenerator {
         String result = "x x";
         String thisLine = null;
         try {
-            InputStream in = getClass().getResourceAsStream("gegenstaende.txt");
+            InputStream in = getClass().getResourceAsStream("/resources/gegenstaende.txt");
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
-
-            while ((thisLine = br.readLine()) != null) {
-                System.out.println(thisLine);
+            if (in != null) {
+                BufferedReader br = new BufferedReader(new InputStreamReader(in));
+                while ((thisLine = br.readLine()) != null) {
+                    LOGGER.error(thisLine);
+                }
             }
 
         } catch (Exception e) {
